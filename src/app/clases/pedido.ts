@@ -5,6 +5,7 @@ export class Pedido {
     direccion;
     productos;
     fechaEntrega;
-
+    precio;
+    estado;
 
 }

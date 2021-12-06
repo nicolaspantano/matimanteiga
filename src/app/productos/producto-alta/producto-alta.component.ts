@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Producto } from 'src/app/clases/producto';
+import { ProductosService } from 'src/app/servicios/productos.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-producto-alta',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductoAltaComponent implements OnInit {
 
-  constructor() { }
+  producto;
+  constructor(private productoSvc:ProductosService) { 
+    this.producto = new Producto();
+  }
 
   ngOnInit(): void {
   }
 
+  Agregar(){
+    Swal.fire({
+      title: 'Producto agregar correctamente',
+      icon: 'success',
+      confirmButtonText: 'Continuar'
+    }).then(()=>{
+      this.productoSvc.AgregarUno(this.producto);
+      this.producto=new Producto();
+    })
+  }
 }

@@ -1,43 +1,18 @@
 
 <h5>Zona:</h5>
-<select class="form-select" aria-label="Default select example">
-    <option selected>Todas</option>
-    <option value="1">Temperley</option>
-    <option value="2">Canning</option>
-    <option value="3">Monte grande</option>
+<select class="form-select" aria-label="Default select example" [(ngModel)]="zonaElegida" (change)="cambiarZona()">
+    <option selected="true" disabled="disabled" value="default">Elija una zona</option>
+    <option *ngFor="let zona of zonas">{{zona.nombre}}</option>
   </select>
-<table class="table text-center" style="margin-top:20px;">
-    <thead>
-      <tr>
-        <th scope="col">Fecha de entrega</th>
-        <th scope="col">Cliente</th>
-        <th scope="col">Zona</th>
-        <th scope="col">Direccion</th>
-        <th scope="col">Cant. Proudctos</th>
 
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>11/11/1111</td>
-        <td>Cliente1</td>
-        <td>Temperley</td>
-        <td>Calle 123</td>
-        <td>6</td>
-      </tr>
-      <tr>
-        <td>11/11/1111</td>
-        <td>Cliente1</td>
-        <td>Temperley</td>
-        <td>Calle 123</td>
-        <td>6</td>
-      </tr>
-      <tr>
-        <td>11/11/1111</td>
-        <td>Cliente1</td>
-        <td>Temperley</td>
-        <td>Calle 123</td>
-        <td>6</td>
-      </tr>
-    </tbody>
-  </table>
+
+  <div class="pedidos">
+    <div style="border:solid; border-color:black; border-width: 4px; padding: 15px;width:50%;" *ngFor="let pedido of pedidosActual">
+      <div class="row">
+        <div class="col-3"><h4>{{pedido.cliente}}</h4></div>
+        <div class="col-9">{{pedido.direccion}}</div>
+      </div>
+        <p *ngFor="let prod of pedido.productos">{{prod.cantidad}} {{prod.medida}} {{prod.nombre}} - {{prod.comentario}}</p>
+        <p>Total: ${{pedido.precio}}</p>
+    </div>
+  </div>

@@ -9,6 +9,10 @@ import { ProductoAltaComponent } from './productos/producto-alta/producto-alta.c
 import { ProductosListadoComponent } from './productos/productos-listado/productos-listado.component';
 import { ZonaAltaComponent } from './zonas/zona-alta/zona-alta.component';
 import { ZonasListadoComponent } from './zonas/zonas-listado/zonas-listado.component';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
+import { FormsModule } from '@angular/forms';
+import { CartelesComponent } from './carteles/carteles.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +22,16 @@ import { ZonasListadoComponent } from './zonas/zonas-listado/zonas-listado.compo
     ProductoAltaComponent,
     ProductosListadoComponent,
     ZonaAltaComponent,
-    ZonasListadoComponent
+    ZonasListadoComponent,
+    CartelesComponent
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
