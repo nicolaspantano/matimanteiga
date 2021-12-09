@@ -20,7 +20,7 @@ export class ProductoAltaComponent implements OnInit {
 
   Agregar(){
     Swal.fire({
-      title: 'Producto agregar correctamente',
+      title: 'Producto agregado correctamente',
       icon: 'success',
       confirmButtonText: 'Continuar'
     }).then(()=>{

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import jsPDF from 'jspdf';
 import { PedidosService } from 'src/app/servicios/pedidos.service';
 import { ZonasService } from 'src/app/servicios/zonas.service';
 
@@ -24,10 +25,25 @@ export class PedidosListadoComponent implements OnInit {
     this.pedidosSvc.TraerTodos().subscribe(res => {
       this.pedidos = res;
     })
+
+    this.ImprimirNoEntregados();
   }
 
   cambiarZona(){
     this.pedidosActual = this.pedidos.filter(p => p.zona == this.zonaElegida);
   }
 
+
+  cambiarEstado(pedido,estado, index){
+    this.pedidosSvc.ActualizarEstado(pedido,estado);
+    this.pedidos[index].estado=estado;
+  }
+
+  ImprimirNoEntregados(){
+    /*const doc = new jsPDF();
+    doc.addPage();
+    doc.html(document.getElementById('pedidos'));
+    doc.save('test.pdf');*/
+
+  }
 }

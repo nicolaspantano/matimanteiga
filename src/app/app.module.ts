@@ -13,6 +13,9 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { FormsModule } from '@angular/forms';
 import { CartelesComponent } from './carteles/carteles.component';
+import { UnidadDeMedidaComponent } from './unidad-de-medida/unidad-de-medida.component';
+import { HojaproduccionComponent } from './hojaproduccion/hojaproduccion.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,9 @@ import { CartelesComponent } from './carteles/carteles.component';
     ProductosListadoComponent,
     ZonaAltaComponent,
     ZonasListadoComponent,
-    CartelesComponent
+    CartelesComponent,
+    UnidadDeMedidaComponent,
+    HojaproduccionComponent
     
   ],
   imports: [
@@ -31,6 +36,7 @@ import { CartelesComponent } from './carteles/carteles.component';
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    NgbModule,
     
   ],
   providers: [],

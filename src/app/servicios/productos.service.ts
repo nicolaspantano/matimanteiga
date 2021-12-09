@@ -27,4 +27,13 @@ export class ProductosService {
     
   }
 
+  AgregarUnidadDeMedida(unidadDeMedida){
+    this.firestore.collection('medidas').add({...unidadDeMedida});
+  }
+
+  TraerUnidadesDeMedida(){
+    return this.firestore.collection('medidas').valueChanges();
+
+  }
+
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ClienteService } from '../servicios/cliente.service';
 
 @Component({
   selector: 'app-carteles',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartelesComponent implements OnInit {
 
-  constructor() { }
+  clientes;
+  constructor(private clientesSvc:ClienteService) {
+    this.clientesSvc.TraerTodos().subscribe(res => {
+      this.clientes = res;
+      console.log(this.clientes);
+    })
+   }
 
   ngOnInit(): void {
   }

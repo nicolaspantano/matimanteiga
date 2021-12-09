@@ -17,4 +17,9 @@ export class PedidosService {
   TraerTodos(){
     return this.firestore.collection('pedidos').valueChanges();
   }
+
+  ActualizarEstado(id,estado){
+    this.firestore.collection('pedidos').doc(id).update({'estado' : estado});
+}
+
 }
