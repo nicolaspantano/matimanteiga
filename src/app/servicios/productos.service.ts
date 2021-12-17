@@ -20,11 +20,11 @@ export class ProductosService {
   }
 
   Editar(producto){
-
+    this.firestore.collection('productos').doc(producto.id).set({...producto})
   }
 
   Eliminar(id){
-    
+    this.firestore.collection('productos').doc(id).delete();
   }
 
   AgregarUnidadDeMedida(unidadDeMedida){

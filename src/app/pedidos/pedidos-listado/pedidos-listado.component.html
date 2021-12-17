@@ -1,4 +1,4 @@
-<h5>Zona:</h5>
+<h5>Zona:</h5> <button (click)="imprimirNoEntregados()">Imprimir</button>
 <select class="form-select" aria-label="Default select example" [(ngModel)]="zonaElegida" (change)="cambiarZona()">
   <option selected="true" disabled="disabled" value="default">Elija una zona</option>
   <option *ngFor="let zona of zonas">{{zona.nombre}}</option>

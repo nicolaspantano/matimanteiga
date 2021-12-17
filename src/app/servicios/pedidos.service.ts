@@ -11,7 +11,8 @@ export class PedidosService {
   AgregarUno(pedido){
     var id = this.firestore.createId();
     pedido.id = id;
-    this.firestore.collection('pedidos').doc(id).set({ ...pedido });
+    console.log('pedidoerror',pedido)
+    this.firestore.collection('pedidos').doc(id).set({...pedido});
   }
 
   TraerTodos(){

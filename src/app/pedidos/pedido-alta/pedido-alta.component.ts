@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Pedido } from 'src/app/clases/pedido';
+import { Producto } from 'src/app/clases/producto';
 import { HojaProduccionService } from 'src/app/hoja-produccion.service';
 import { ClienteService } from 'src/app/servicios/cliente.service';
 import { PedidosService } from 'src/app/servicios/pedidos.service';
@@ -74,7 +75,11 @@ export class PedidoAltaComponent implements OnInit {
     }).then((res)=>{
       var prodElegido = prodAElegir[res.value];
       var i = this.productosTodos.findIndex(x => x.nombre == prodElegido);
-      this.productosElegidos.push(this.productosTodos[i]);
+      var nuevoProd = new Producto();
+      nuevoProd.id = this.productosTodos[i].id;
+      nuevoProd.nombre = this.productosTodos[i].nombre;
+      
+      this.productosElegidos.push(Object.assign({}, nuevoProd));
       console.log('todos',this.productosTodos);
       console.log('elegidos',this.productosElegidos);
     })
