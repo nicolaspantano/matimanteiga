@@ -54,6 +54,21 @@ export class PedidosListadoComponent implements OnInit {
         this.pedidosActual.push(element);
       }
     });
+    this.pedidosActual.sort(function (a,b){
+
+      var fechaUnoStr = a.fechaEntrega.split('/');
+      var fechaUno = new Date(fechaUnoStr[2],fechaUnoStr[1]-1,fechaUnoStr[0]);
+
+      var fechaDosStr = b.fechaEntrega.split('/');
+      var fechaDos = new Date(fechaDosStr[2],fechaDosStr[1]-1,fechaDosStr[0]);
+
+      if(fechaUno>fechaDos){
+        return 1;
+      }
+      return -1;
+
+      
+    })
   }
 
 
@@ -94,6 +109,21 @@ export class PedidosListadoComponent implements OnInit {
       }
       
     });
+    this.pedidosActual.sort(function (a,b){
+
+      var fechaUnoStr = a.fechaEntrega.split('/');
+      var fechaUno = new Date(fechaUnoStr[2],fechaUnoStr[1]-1,fechaUnoStr[0]);
+
+      var fechaDosStr = b.fechaEntrega.split('/');
+      var fechaDos = new Date(fechaDosStr[2],fechaDosStr[1]-1,fechaDosStr[0]);
+
+      if(fechaUno>fechaDos){
+        return 1;
+      }
+      return -1;
+
+      
+    })
   }
 
 }
