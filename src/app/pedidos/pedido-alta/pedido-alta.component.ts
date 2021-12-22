@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NgbDatepicker, NgbDateStruct, NgbInputDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Pedido } from 'src/app/clases/pedido';
 import { Producto } from 'src/app/clases/producto';
 import { HojaProduccionService } from 'src/app/hoja-produccion.service';
@@ -15,18 +17,27 @@ import Swal from 'sweetalert2';
 })
 export class PedidoAltaComponent implements OnInit {
 
+  pedidoInput;
+
+  model: NgbDateStruct;
+  date;
+
+  mensajeBoton = "Crear";
   zonas;
   zonaElegida;
   productosTodos;
   productosElegidos=[];
   medidas;
   pedido;
-  constructor(private clienteSvc:ClienteService, private produccionSvc:HojaProduccionService ,private zonasSvc:ZonasService, private prodSvc:ProductosService, private pedidosSvc:PedidosService) { 
+  constructor(private _route: ActivatedRoute,private clienteSvc:ClienteService, private produccionSvc:HojaProduccionService ,private zonasSvc:ZonasService, private prodSvc:ProductosService, private pedidosSvc:PedidosService) { 
     this.pedido=new Pedido();
+    this.pedido.fechaEntrega="";
   }
 
 
-  cargarTodo(){
+
+
+   async cargarTodo(){
     this.zonasSvc.TraerTodas().subscribe(res => {
       this.zonas=res;
       console.log(res);
@@ -46,7 +57,37 @@ export class PedidoAltaComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.cargarTodo();
+    
+    this._route.queryParams.subscribe(params => {
+      console.log('param',params)
+      
+      if(params.pedidoInput){
+        this.pedidoInput = JSON.parse(params.pedidoInput) as Pedido;
+      
+      
+      }
+      this.cargarTodo().then(()=>{
+        if(this.pedidoInput!=undefined){
+          this.pedido=this.pedidoInput;
+          this.pedido.productos = this.pedidoInput.productos;
+          this.productosElegidos = this.pedidoInput.productos;
+                          
+          
+          setTimeout(() => {
+            this.elegirZona({'nombre' : this.pedidoInput.zona})
+          }, 3000);
+          this.mensajeBoton = 'Modificar';
+        }
+
+        
+      });
+      
+      
+  });
+
+
+    
+    
   }
 
   elegirZona(zona){
@@ -82,6 +123,7 @@ export class PedidoAltaComponent implements OnInit {
       this.productosElegidos.push(Object.assign({}, nuevoProd));
       console.log('todos',this.productosTodos);
       console.log('elegidos',this.productosElegidos);
+      
     })
 
 
@@ -105,6 +147,7 @@ export class PedidoAltaComponent implements OnInit {
   }
 
   agregarPedido(){
+    if(this.mensajeBoton=='Crear'){
     this.pedido.zona = this.zonaElegida;
     this.pedido.productos = this.productosElegidos;
     this.pedido.estado = 0;
@@ -117,16 +160,25 @@ export class PedidoAltaComponent implements OnInit {
       
       this.clienteSvc.AgregarUno({'cliente' : this.pedido.cliente, 'direccion' : this.pedido.direccion, 'zona' : this.pedido.zona})
       this.productosElegidos.forEach(element => {
-        this.produccionSvc.AgregarUno(element);
+        this.produccionSvc.AgregarUno(this.pedido.fechaEntrega, element);
       });
 
-      this.pedido=new Pedido()
-      this.zonaElegida = '';
-      this.productosElegidos = [];
-    
-      this.cargarTodo();
+      
 
     })
+  }
+  else{
+    console.log(this.pedido);
+    this.pedidosSvc.SetByid(this.pedido);
+    window.location.href="/pedidos-alta"
+    
+  }
+  this.pedido=new Pedido()
+      this.zonaElegida = '';
+      this.productosElegidos = [];
+      this.model = undefined;
+      this.cargarTodo();
+      
   }
   agregarUnidadDeMedida(prod){
     var medidaAElegir = this.generateJsonMedidas();
@@ -146,4 +198,16 @@ export class PedidoAltaComponent implements OnInit {
     })
   }
 
+
+  changeCalendar(){
+    console.log('model', this.model);
+    this.pedido.fechaEntrega = this.model.day + '/' + this.model.month + '/' + this.model.year;
+    console.log('fefchaEntrega',this.pedido.fechaEntrega)
+  }
+
+  eliminarProd(i){
+    this.productosElegidos.splice(i,1);
+  }
 }
+
+

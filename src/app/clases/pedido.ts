@@ -7,5 +7,6 @@ export class Pedido {
     fechaEntrega;
     precio;
     estado;
+    comentario;
 
 }

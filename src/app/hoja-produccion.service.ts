@@ -8,11 +8,9 @@ export class HojaProduccionService {
 
   constructor(private firestore:AngularFirestore) { }
 
-  AgregarUno(prod){
-    var fecha= new Date();
-    var fechaStr = (fecha.getDate()+'/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear());
-    
-    this.firestore.collection('produccion').add({'fecha' : fechaStr, 'producto' : prod})
+  AgregarUno(fecha, prod){
+    console.log(prod);
+    this.firestore.collection('produccion').add({'fecha' :fecha , 'producto' : prod})
     
   }
   TraerTodos(){

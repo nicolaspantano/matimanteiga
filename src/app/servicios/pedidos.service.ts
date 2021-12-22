@@ -23,4 +23,8 @@ export class PedidosService {
     this.firestore.collection('pedidos').doc(id).update({'estado' : estado});
 }
 
+
+  SetByid(pedido){
+    this.firestore.collection('pedidos').doc(pedido.id).set({...pedido})
+  }
 }
