@@ -67,6 +67,7 @@ export class PedidoAltaComponent implements OnInit {
       
       }
       this.cargarTodo().then(()=>{
+
         if(this.pedidoInput!=undefined){
           this.pedido=this.pedidoInput;
           this.pedido.productos = this.pedidoInput.productos;
@@ -148,14 +149,18 @@ export class PedidoAltaComponent implements OnInit {
 
   agregarPedido(){
     if(this.mensajeBoton=='Crear'){
+      console.log('entro al crear');
     this.pedido.zona = this.zonaElegida;
     this.pedido.productos = this.productosElegidos;
     this.pedido.estado = 0;
+    console.log('antes del swal',this.pedido);
     Swal.fire({
       title : 'Pedido exitoso!',
       icon : 'success',
       confirmButtonText : 'Continuar'
     }).then(()=>{
+      console.log('principio then')
+      console.log('a ver ', this.pedido)
       this.pedidosSvc.AgregarUno(this.pedido);
       
       this.clienteSvc.AgregarUno({'cliente' : this.pedido.cliente, 'direccion' : this.pedido.direccion, 'zona' : this.pedido.zona})
@@ -164,20 +169,25 @@ export class PedidoAltaComponent implements OnInit {
       });
 
       
-
-    })
-  }
-  else{
-    console.log(this.pedido);
-    this.pedidosSvc.SetByid(this.pedido);
-    window.location.href="/pedidos-alta"
-    
-  }
-  this.pedido=new Pedido()
+      
+      this.pedido=new Pedido()
       this.zonaElegida = '';
       this.productosElegidos = [];
       this.model = undefined;
-      this.cargarTodo();
+      //this.cargarTodo();
+      console.log('fin then')
+    })
+  }
+  else{
+    console.log('entro al else',this.pedido);
+    this.pedidosSvc.SetByid(this.pedido).then(()=>{
+      window.location.href="/pedidos-alta"
+
+    });
+    
+  }
+
+
       
   }
   agregarUnidadDeMedida(prod){

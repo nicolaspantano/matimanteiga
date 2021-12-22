@@ -22,6 +22,7 @@ export class PedidosListadoComponent implements OnInit {
   ngOnInit(): void {
 
     
+    
     this.zonaSvc.TraerTodas().subscribe(res => {
       this.zonas = res;
     })
@@ -44,6 +45,8 @@ export class PedidosListadoComponent implements OnInit {
 
         
       })
+
+      
     })
   }
 
