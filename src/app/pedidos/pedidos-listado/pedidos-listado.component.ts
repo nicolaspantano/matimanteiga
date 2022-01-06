@@ -3,6 +3,8 @@ import {jsPDF} from 'jspdf';
 import { PedidosService } from 'src/app/servicios/pedidos.service';
 import { ZonasService } from 'src/app/servicios/zonas.service';
 import  dateFormat, { masks }  from 'dateformat';
+import Swal from 'sweetalert2';
+import { HojaProduccionService } from 'src/app/hoja-produccion.service';
 
 @Component({
   selector: 'app-pedidos-listado',
@@ -17,7 +19,7 @@ export class PedidosListadoComponent implements OnInit {
   zonaElegida='default';
   pedidosActual=[];
 
-  constructor(private zonaSvc : ZonasService, private pedidosSvc:PedidosService) { }
+  constructor(private produccionSvc:HojaProduccionService ,private zonaSvc : ZonasService, private pedidosSvc:PedidosService) { }
 
   ngOnInit(): void {
 
@@ -126,6 +128,24 @@ export class PedidosListadoComponent implements OnInit {
       return -1;
 
       
+    })
+  }
+
+  eliminarPedido(id){
+   
+    Swal.fire({
+      title:'Desea eliminar el pedido?',
+      confirmButtonText: 'Si',
+      cancelButtonText:'No',
+      showConfirmButton: true,
+      showCancelButton:true
+    }).then((res)=>{
+      
+      if(res.isConfirmed){
+        this.pedidosSvc.Eliminar(id).then(()=>{
+          this.produccionSvc.Eliminar(id);
+        })
+      }
     })
   }
 

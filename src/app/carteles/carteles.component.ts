@@ -12,7 +12,6 @@ export class CartelesComponent implements OnInit {
   constructor(private clientesSvc:ClienteService) {
     this.clientesSvc.TraerTodos().subscribe(res => {
       this.clientes = res;
-      console.log(this.clientes);
     })
    }
 

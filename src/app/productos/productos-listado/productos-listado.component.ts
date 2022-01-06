@@ -15,7 +15,6 @@ export class ProductosListadoComponent implements OnInit {
   ngOnInit(): void {
     this.productosSvc.TraerTodos().subscribe(res => {
       this.productos=res;
-      console.log(res);
     })
   }
 

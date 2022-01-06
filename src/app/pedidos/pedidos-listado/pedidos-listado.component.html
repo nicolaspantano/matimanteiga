@@ -32,7 +32,7 @@
       </div>
       <p *ngFor="let prod of pedido.productos">{{prod.cantidad}} {{prod.medida}} {{prod.nombre}} - {{prod.comentario}}
       </p>
-      <p>Total: ${{pedido.precio}} <span *ngIf="pedido.comentario" style="margin-left: 20px;">Comentario: {{pedido.comentario}}</span> <span style="float: right;"><button [routerLink]="['/pedidos-alta']" [queryParams]="{pedidoInput:pedido | json }" class="btn btn-primary">Editar</button></span></p>
+      <p>Total: ${{pedido.precio}} <span *ngIf="pedido.comentario" style="margin-left: 20px;">Comentario: {{pedido.comentario}}</span> <span style="float: right;"><button [routerLink]="['/pedidos-alta']" [queryParams]="{pedidoInput:pedido | json }" class="btn btn-primary">Editar</button><button class="btn btn-danger" (click)="eliminarPedido(pedido.id)" style="margin-left:15px">Eliminar</button></span></p>
     </div>
     <div class="col-2">
       
