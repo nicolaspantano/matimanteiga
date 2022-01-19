@@ -15,6 +15,7 @@ export class HojaproduccionComponent implements OnInit {
   produccion;
   constructor(private produccionSvc:HojaProduccionService) {
     var fecha= new Date();
+    console.log(fecha.getDate()+'/'+(fecha.getMonth()+1)+'/'+fecha.getFullYear());
    }
 
   ngOnInit(): void {
@@ -23,6 +24,7 @@ export class HojaproduccionComponent implements OnInit {
   changeCalendar(){
     this.produccionSvc.TraerTodosPorFecha(this.model.day + '/' + this.model.month + '/' + this.model.year).valueChanges().subscribe(res => {
      this.registros = res;
+     console.log(this.registros)
     })
   }
 }

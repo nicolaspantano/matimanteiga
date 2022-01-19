@@ -40,14 +40,17 @@ export class PedidoAltaComponent implements OnInit {
    async cargarTodo(){
     this.zonasSvc.TraerTodas().subscribe(res => {
       this.zonas=res;
+      console.log(res);
     })
 
     this.prodSvc.TraerTodos().subscribe(res=>{
       this.productosTodos=res;
+      console.log('prod', res)
     })
 
     this.prodSvc.TraerUnidadesDeMedida().subscribe(res => {
       this.medidas = res;
+      console.log(res);
     })
   }
 
@@ -56,6 +59,7 @@ export class PedidoAltaComponent implements OnInit {
   ngOnInit(): void {
     
     this._route.queryParams.subscribe(params => {
+      console.log('param',params)
       
       if(params.pedidoInput){
         this.pedidoInput = JSON.parse(params.pedidoInput) as Pedido;
@@ -97,6 +101,7 @@ export class PedidoAltaComponent implements OnInit {
     (<HTMLDListElement>document.getElementById(zona.nombre)).style.color="white";
 
     this.zonaElegida=zona.nombre;
+    console.log(this.zonaElegida)
 
   }
 
@@ -117,6 +122,8 @@ export class PedidoAltaComponent implements OnInit {
       nuevoProd.nombre = this.productosTodos[i].nombre;
       
       this.productosElegidos.push(Object.assign({}, nuevoProd));
+      console.log('todos',this.productosTodos);
+      console.log('elegidos',this.productosElegidos);
       
     })
 
@@ -142,23 +149,23 @@ export class PedidoAltaComponent implements OnInit {
 
   agregarPedido(){
     if(this.mensajeBoton=='Crear'){
+      console.log('entro al crear');
     this.pedido.zona = this.zonaElegida;
     this.pedido.productos = this.productosElegidos;
     this.pedido.estado = 0;
+    console.log('antes del swal',this.pedido);
     Swal.fire({
       title : 'Pedido exitoso!',
       icon : 'success',
       confirmButtonText : 'Continuar'
     }).then(()=>{
-
-      
-      var id = this.pedidosSvc.AgregarUno(this.pedido);
+      console.log('principio then')
+      console.log('a ver ', this.pedido)
+      this.pedidosSvc.AgregarUno(this.pedido);
       
       this.clienteSvc.AgregarUno({'cliente' : this.pedido.cliente, 'direccion' : this.pedido.direccion, 'zona' : this.pedido.zona})
-      
-      
       this.productosElegidos.forEach(element => {
-        this.produccionSvc.AgregarUno(this.pedido.fechaEntrega, element, id);
+        this.produccionSvc.AgregarUno(this.pedido.fechaEntrega, element);
       });
 
       
@@ -166,17 +173,14 @@ export class PedidoAltaComponent implements OnInit {
       this.pedido=new Pedido()
       this.zonaElegida = '';
       this.productosElegidos = [];
-      this.model = null;
+      this.model = undefined;
       //this.cargarTodo();
+      console.log('fin then')
     })
   }
   else{
-    console.log(this.pedido)
-    this.produccionSvc.Eliminar(this.pedido.id);
+    console.log('entro al else',this.pedido);
     this.pedidosSvc.SetByid(this.pedido).then(()=>{
-      this.productosElegidos.forEach(e => {
-        this.produccionSvc.AgregarUno(this.pedido.fechaEntrega, e, this.pedido.id);
-      });
       window.location.href="/pedidos-alta"
 
     });
@@ -195,16 +199,20 @@ export class PedidoAltaComponent implements OnInit {
       inputPlaceholder: 'Seleccione un producto',
       
     }).then((res)=>{
+      console.log(this.pedido);
       var medidaElegida = medidaAElegir[res.value];
       var i = this.medidas.findIndex(x => x.nombre == medidaElegida);
       prod.medida = this.medidas[i].nombre;
+      console.log(prod);
 
     })
   }
 
 
   changeCalendar(){
+    console.log('model', this.model);
     this.pedido.fechaEntrega = this.model.day + '/' + this.model.month + '/' + this.model.year;
+    console.log('fefchaEntrega',this.pedido.fechaEntrega)
   }
 
   eliminarProd(i){
