@@ -11,7 +11,9 @@ export class ClienteService {
   AgregarUno(cliente){
     this.comprobarSiExiste(cliente).subscribe((res)=>{
       if(res.length==0){
-        this.firestore.collection('clientes').add({...cliente});
+        let id = this.firestore.createId();
+        cliente.id=id;
+        this.firestore.collection('clientes').doc(id).set({...cliente});
 
       }
     })
@@ -23,6 +25,10 @@ export class ClienteService {
 
   comprobarSiExiste(cliente){
     return this.firestore.collection('clientes',(ref)=>ref.where('direccion','==',cliente.direccion)).valueChanges();
+  }
+
+  eliminarUno(id){
+    this.firestore.collection('clientes').doc(id).delete();
   }
 
 }
