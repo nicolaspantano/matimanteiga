@@ -38,7 +38,7 @@
     "rxjs": "~6.5.5",
     "sweetalert2": "^11.1.7",
     "tslib": "^2.0.0",
-    "typescript": "^4.3.5",
+    "typescript": "^4.5.4",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -59,10 +59,10 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.5.4"
   },
   "engines": {
-    "node": "v14.17.0",
-    "npm": "6.14.13"
+    "node": "v16.13.2",
+    "npm": "8.1.2"
   }
 }
