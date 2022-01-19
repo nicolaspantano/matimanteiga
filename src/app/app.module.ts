@@ -16,8 +16,6 @@ import { CartelesComponent } from './carteles/carteles.component';
 import { UnidadDeMedidaComponent } from './unidad-de-medida/unidad-de-medida.component';
 import { HojaproduccionComponent } from './hojaproduccion/hojaproduccion.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TablaPedidosComponent } from './tabla-pedidos/tabla-pedidos.component';
-import { TablaClientesComponent } from './tabla-clientes/tabla-clientes.component';
 
 @NgModule({
   declarations: [
@@ -30,9 +28,7 @@ import { TablaClientesComponent } from './tabla-clientes/tabla-clientes.componen
     ZonasListadoComponent,
     CartelesComponent,
     UnidadDeMedidaComponent,
-    HojaproduccionComponent,
-    TablaPedidosComponent,
-    TablaClientesComponent
+    HojaproduccionComponent
     
   ],
   imports: [
